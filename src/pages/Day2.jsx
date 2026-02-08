@@ -33,7 +33,7 @@
 //   return (
 //     <div className="min-h-screen flex items-center justify-center bg-pink-100">
 //       <div className="text-center bg-white/80 backdrop-blur-md p-10 rounded-3xl shadow-xl border border-pink-200">
-        
+
 //         <img
 //           src="https://media.tenor.com/ONx_IN1MwtEAAAAi/mochi.gif"
 //           alt="love gif"
@@ -49,7 +49,6 @@
 //   );
 // }
 
-
 //   return (
 //     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-rose-100 to-red-200 relative">
 //       <StoryBar current={2} />
@@ -58,7 +57,6 @@
 //         <h1 className="text-3xl font-bold text-pink-600 mb-3">
 //           Propose Day 💍
 //         </h1>
-       
 
 //         <p className="mb-3">
 //           For <b>{to}</b>
@@ -132,12 +130,10 @@
 //   );
 // }
 
-
-
-
-import { useState } from "react";
 import StoryBar from "../components/StoryBar";
+import { motion } from "framer-motion";
 import FloatingHearts from "../components/FloatingHearts";
+import { useState, useEffect } from "react";
 
 const noFlow = [
   {
@@ -159,6 +155,9 @@ const noFlow = [
 ];
 
 export default function Day2() {
+  const [typedText, setTypedText] = useState("");
+  const [step, setStep] = useState(0);
+
   const params = new URLSearchParams(window.location.search);
   const to = params.get("to") || "My Love";
   const from = params.get("from") || "Someone 💕";
@@ -167,12 +166,42 @@ export default function Day2() {
   const [index, setIndex] = useState(0);
   const [accepted, setAccepted] = useState(false);
 
+  useEffect(() => {
+  const messages = [
+    "So... ek question puchu? 😌",
+    "Do you love me? 💕",
+  ];
+
+  let messageIndex = 0;
+  let charIndex = 0;
+
+  const startTyping = () => {
+    const typingInterval = setInterval(() => {
+      setTypedText(messages[messageIndex].slice(0, charIndex + 1));
+      charIndex++;
+
+      if (charIndex === messages[messageIndex].length) {
+        clearInterval(typingInterval);
+
+        if (messageIndex < messages.length - 1) {
+          setTimeout(() => {
+            messageIndex++;
+            charIndex = 0;
+            startTyping(); // restart typing for next message
+          }, 1000);
+        }
+      }
+    }, 40);
+  };
+
+  startTyping();
+}, []);
+
+
   if (accepted) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-pink-100 px-4">
-      
         <div className="text-center bg-white/80 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-3xl shadow-xl border border-pink-200 w-full max-w-md">
-          
           <img
             src="https://media.tenor.com/ONx_IN1MwtEAAAAi/mochi.gif"
             alt="love gif"
@@ -182,20 +211,23 @@ export default function Day2() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-pink-600">
             Mujhe pata tha… drama kar rahi thi bas 😌💕
           </h1>
-
         </div>
       </div>
     );
   }
 
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-200 via-rose-100 to-red-200 relative px-4">
-        
-<FloatingHearts/>
+      <FloatingHearts />
       <StoryBar current={2} />
 
-      <div className="bg-white/80 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-3xl text-center shadow-xl border border-pink-200 w-full max-w-md relative">
-
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        className="bg-white/80 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-3xl text-center shadow-xl border border-pink-200 w-full max-w-md relative"
+      >
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-pink-600 mb-3">
           Propose Day 💍
         </h1>
@@ -212,9 +244,10 @@ export default function Day2() {
               className="w-32 sm:w-40 md:w-44 mx-auto mb-4 rounded-xl shadow-md"
             />
 
-            <p className="mb-4 text-base sm:text-lg">
-              Do you love me?? 💕
-            </p>
+           <p className="mb-4 text-base sm:text-lg min-h-[28px]">
+  {typedText}
+  <span className="animate-pulse">|</span>
+</p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <button
@@ -245,9 +278,7 @@ export default function Day2() {
               {noFlow[index].title}
             </h2>
 
-            <p className="mb-3 text-sm sm:text-base">
-              {noFlow[index].message}
-            </p>
+            <p className="mb-3 text-sm sm:text-base">{noFlow[index].message}</p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <button
@@ -276,10 +307,8 @@ export default function Day2() {
           </div>
         )}
 
-        <p className="mt-4 text-xs sm:text-sm text-gray-500">
-          From {from}
-        </p>
-      </div>
+        <p className="mt-4 text-xs sm:text-sm text-gray-500">From {from}</p>
+      </motion.div>
     </div>
   );
 }
