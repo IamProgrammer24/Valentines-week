@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { slides } from "./Slides";
-import FloatingHearts from "./FloatingHearts";
+import FloatingHearts from "./components/FloatingHearts";
 
 export default function Story() {
   const params = new URLSearchParams(window.location.search);
