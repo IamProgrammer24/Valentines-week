@@ -39,7 +39,7 @@ export default function Day2() {
     "So... ek chota sa surprise 😌",
   "Do you like surprises? 🎁",
   "Do you trust me? 🙂",
-  "Do you love me? 💕",
+ "Will you be my Valentine? 💘",
   ];
 
   let messageIndex = 0;
@@ -99,7 +99,7 @@ export default function Day2() {
         className="bg-white/80 backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-3xl text-center shadow-xl border border-pink-200 w-full max-w-md relative"
       >
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-pink-600 mb-3">
-          Propose Day 💍
+           Valentine's Special 🌹
         </h1>
 
         <p className="mb-3 text-sm sm:text-base">
