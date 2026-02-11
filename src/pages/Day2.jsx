@@ -21,14 +21,21 @@ const noFlow = [
     movingNo: true,
   },
 ];
+const approvedLinks = {
+  abc123: { to: "X0X0", from: "X0X0", },
+  xyz456: { to: "Neha", from: "Brajesh" }
+};
 
 export default function Day2() {
   const [typedText, setTypedText] = useState("");
   const [step, setStep] = useState(0);
 
   const params = new URLSearchParams(window.location.search);
-  const to = params.get("to") || "My Love";
-  const from = params.get("from") || "Someone 💕";
+  const id = params.get("id");
+  const data = approvedLinks[id];
+
+  // const to = params.get("to") || "My Love";
+  // const from = params.get("from") || "Someone 💕";
 
   const [showNo, setShowNo] = useState(false);
   const [index, setIndex] = useState(0);
@@ -103,7 +110,7 @@ export default function Day2() {
         </h1>
 
         <p className="mb-3 text-sm sm:text-base">
-          For <b>{to}</b>
+          For <b>{data.to}</b>
         </p>
 
         {!showNo && (
@@ -177,7 +184,10 @@ export default function Day2() {
           </div>
         )}
 
-        <p className="mt-4 text-xs sm:text-sm text-gray-500">From {from}</p>
+        <p className="mt-4 text-xs sm:text-sm text-gray-500">From {data.from}</p>
+        <p className="text-[10px] sm:text-xs text-gray-400 mt-2">
+ Licensed by {data.to} ❤️
+</p>
       </motion.div>
     </div>
   );

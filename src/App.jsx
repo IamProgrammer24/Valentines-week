@@ -13,7 +13,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/day/1" element={<Day1 />} />
-        <Route path="/day/2" element={<Day2 />} />
+        <Route path="/" element={<Day2 />} />
         {/* <Route path="/day/3" element={<Day3 />} />
         <Route path="/day/4" element={<Day4 />} />
         <Route path="/day/5" element={<Day5 />} />
